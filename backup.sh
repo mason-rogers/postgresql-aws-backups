@@ -11,8 +11,10 @@ databases=$(echo $POSTGRES_DATABASES | tr "," "\n")
 
 for database in $databases
 do
+    echo Dumping $database
+
     PGPASSWORD="$POSTGRES_PASSWORD" pg_dump \
-        -u ${POSTGRES_USER:-postgres} \
+        -U ${POSTGRES_USER:-postgres} \
         -h ${POSTGRES_HOST:-127.0.0.1} \
         -p ${POSTGRES_PORT:-5432} \
         --create \
