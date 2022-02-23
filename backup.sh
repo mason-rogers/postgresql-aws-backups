@@ -1,6 +1,8 @@
 #!/bin/bash
 set -x -e
 
+INTERNAL_DATABASES=("postgres" "repmgr" "template0" "template1")
+
 mkdir -p /tmp/dumps
 
 FILENAME="pgdump_$(date +%F_%H-%M).tar.gz"
@@ -16,6 +18,13 @@ fi
 
 for database in $databases
 do
+    IS_INTERNAL=$(echo ${INTERNAL_DATABASES[@]} | grep -o $database | wc -w)
+
+    if [[ $IS_INTERNAL -eq 1 ]]; then
+        echo "Skipping internal database $database"
+        continue
+    fi
+
     echo Dumping $database
 
     pg_dump \
