@@ -9,7 +9,7 @@ export PGPASSWORD="$POSTGRES_PASSWORD"
 echo Backing up databases to $FILENAME
 
 if [[ -z "${POSTGRES_DATABASES}" ]]; then
-    databases=$(psql -U postgres -c "SELECT datname from pg_database" | sed -e '1,2d;$d' | sed -e 's/ //g;$d')
+    databases=$(psql -U ${POSTGRES_USER:-postgres} -h ${POSTGRES_HOST:-127.0.0.1} -p ${POSTGRES_PORT:-5432} -c "SELECT datname from pg_database" | sed -e '1,2d;$d' | sed -e 's/ //g;$d')
 else
     databases=$(echo $POSTGRES_DATABASES | tr "," "\n")
 fi
