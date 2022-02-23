@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x -e
+set -xe
 
 INTERNAL_DATABASES=("postgres" "repmgr" "template0" "template1")
 
