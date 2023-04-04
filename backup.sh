@@ -44,3 +44,9 @@ aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
 aws configure set default.region ${AWS_DEFAULT_REGION:-eu-central-1}
 
 aws s3 cp --endpoint-url=$AWS_ENDPOINT $FILENAME s3://${AWS_BUCKET}${AWS_BUCKET_PATH:=/}${FILENAME}
+
+if [[ -n $HEARTBEAT_URL ]]; then
+    echo "Curling heartbeat URL"
+
+    curl $HEARTBEAT_URL
+fi
